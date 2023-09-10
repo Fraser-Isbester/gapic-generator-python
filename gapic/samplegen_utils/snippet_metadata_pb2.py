@@ -120,7 +120,7 @@ Api = _reflection.GeneratedProtocolMessageType('Api', (_message.Message,), {
     })
 _sym_db.RegisterMessage(Api)
 
-if _descriptor._USE_C_DESCRIPTORS == False:
+if _descriptor._USE_C_DESCRIPTORS is False:
 
     DESCRIPTOR._options = None
     DESCRIPTOR._serialized_options = b'\252\002-Google.Cloud.Tools.SnippetGen.SnippetIndex.V1\312\002-Google\\Cloud\\Tools\\SnippetGen\\SnippetIndex\\V1\352\0022Google::Cloud::Tools::SnippetGen::SnippetIndex::V1'

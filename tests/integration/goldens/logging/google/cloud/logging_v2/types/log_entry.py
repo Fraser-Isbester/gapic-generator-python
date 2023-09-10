@@ -15,7 +15,7 @@
 #
 from __future__ import annotations
 
-from typing import MutableMapping, MutableSequence
+from typing import MutableMapping
 
 import proto  # type: ignore
 

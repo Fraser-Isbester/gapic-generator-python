@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from enum import Enum, auto
-from gapic.utils import to_snake_case
 
 
 class SampleError(Exception):

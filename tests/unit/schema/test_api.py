@@ -33,7 +33,6 @@ from google.iam.v1 import iam_policy_pb2  # type: ignore
 from gapic.schema import api
 from gapic.schema import imp
 from gapic.schema import mixins
-from gapic.schema import naming
 from gapic.schema import wrappers
 from gapic.utils import Options
 
@@ -42,7 +41,6 @@ from test_utils.test_utils import (
     make_field_pb2,
     make_file_pb2,
     make_message_pb2,
-    make_method,
     make_naming,
     make_oneof_pb2,
 )
@@ -1316,7 +1314,7 @@ def test_extended_lro_no_such_service():
         f.options.MergeFrom(options)
 
     with pytest.raises(ValueError):
-        api_schema = api.Proto.build(
+        api.Proto.build(
             make_file_pb2(
                 "extended_lro.proto",
                 package="exlro",
@@ -1377,7 +1375,7 @@ def test_extended_lro_no_polling_method():
         f.options.MergeFrom(options)
 
     with pytest.raises(ValueError):
-        api_schema = api.Proto.build(
+        api.Proto.build(
             make_file_pb2(
                 "extended_lro.proto",
                 package="exlro",
@@ -1440,7 +1438,7 @@ def test_extended_lro_different_output_types():
         f.options.MergeFrom(options)
 
     with pytest.raises(ValueError):
-        api_schema = api.Proto.build(
+        api.Proto.build(
             make_file_pb2(
                 "extended_lro.proto",
                 package="exlro",
@@ -1497,7 +1495,7 @@ def test_extended_lro_not_an_operation():
     polling_method_options.Extensions[ex_ops_pb2.operation_polling_method] = True
 
     with pytest.raises(ValueError):
-        api_schema = api.Proto.build(
+        api.Proto.build(
             make_file_pb2(
                 "extended_lro.proto",
                 package="exlro",

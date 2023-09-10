@@ -229,7 +229,7 @@ def test_mock_value_original_type_int():
 
 
 def test_oneof():
-    REP = descriptor_pb2.FieldDescriptorProto.Label.Value('LABEL_REPEATED')
+    descriptor_pb2.FieldDescriptorProto.Label.Value('LABEL_REPEATED')
 
     field = make_field(oneof="oneof_name")
     assert field.oneof == "oneof_name"
@@ -252,7 +252,7 @@ def test_mock_value_bool():
 
 def test_mock_value_original_type_bool():
     field = make_field(name='foo_bar', type='TYPE_BOOL')
-    assert field.mock_value_original_type == True
+    assert field.mock_value_original_type is True
 
 
 def test_mock_value_str():
@@ -578,7 +578,7 @@ def test_field_name_kword_disambiguation():
 
 
 def test_field_resource_reference():
-    field = make_field(name='parent', type='TYPE_STRING')
+    make_field(name='parent', type='TYPE_STRING')
 
 
 def test_extended_operation_properties():

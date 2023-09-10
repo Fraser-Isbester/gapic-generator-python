@@ -23,13 +23,12 @@ import gapic.utils as utils
 
 from gapic.samplegen import samplegen
 from gapic.samplegen_utils import (types, utils as gapic_utils)
-from gapic.samplegen_utils import snippet_metadata_pb2
 from gapic.schema import (naming, wrappers)
 
 from ..common_types import (DummyField, DummyMessage,
 
                           DummyMessageTypePB, DummyMethod, DummyService, DummyIdent,
-                          DummyApiSchema, DummyNaming, enum_factory, message_factory)
+                          DummyApiSchema, DummyNaming, message_factory)
 
 from collections import namedtuple
 from textwrap import dedent

@@ -25,9 +25,8 @@ from google.protobuf import descriptor_pb2
 from google.protobuf.compiler.plugin_pb2 import CodeGeneratorResponse
 
 from gapic.generator import generator
-from gapic.samplegen_utils import snippet_metadata_pb2, types, yaml
-from ..common_types import (DummyApiSchema, DummyField, DummyIdent, DummyNaming, DummyMessage, DummyMessageTypePB,
-                          DummyService, DummyMethod, message_factory, enum_factory)
+from gapic.samplegen_utils import snippet_metadata_pb2, types
+from ..common_types import (DummyApiSchema, DummyNaming, DummyService, DummyMethod)
 
 from gapic.schema import api
 from gapic.schema import naming
@@ -554,7 +553,7 @@ def test_generate_autogen_samples(mock_generate_sample, mock_generate_specs):
     api_schema = make_api(naming=naming.NewNaming(
         name="Mollusc", version="v6"))
 
-    actual_response = g.get_response(api_schema, opts=opts)
+    g.get_response(api_schema, opts=opts)
 
     # Just check that generate_sample_specs was called
     # Correctness of the spec is tested in samplegen unit tests

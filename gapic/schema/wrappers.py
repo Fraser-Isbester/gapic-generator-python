@@ -34,12 +34,11 @@ import json
 import keyword
 import re
 from itertools import chain
-from typing import (Any, cast, Dict, FrozenSet, Iterator, Iterable, List, Mapping,
+from typing import (Any, cast, Dict, FrozenSet, Iterable, List, Mapping,
                     ClassVar, Optional, Sequence, Set, Tuple, Union, Pattern)
 from google.api import annotations_pb2      # type: ignore
 from google.api import client_pb2
 from google.api import field_behavior_pb2
-from google.api import http_pb2
 from google.api import resource_pb2
 from google.api import routing_pb2
 from google.api_core import exceptions

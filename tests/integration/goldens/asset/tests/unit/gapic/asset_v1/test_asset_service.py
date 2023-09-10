@@ -23,13 +23,9 @@ except ImportError:  # pragma: NO COVER
 
 import grpc
 from grpc.experimental import aio
-from collections.abc import Iterable
 from google.protobuf import json_format
 import json
-import math
 import pytest
-from proto.marshal.rules.dates import DurationRule, TimestampRule
-from proto.marshal.rules import wrappers
 from requests import Response
 from requests import Request, PreparedRequest
 from requests.sessions import Session
@@ -42,7 +38,6 @@ from google.api_core import gapic_v1
 from google.api_core import grpc_helpers
 from google.api_core import grpc_helpers_async
 from google.api_core import operation
-from google.api_core import operation_async  # type: ignore
 from google.api_core import operations_v1
 from google.api_core import path_template
 from google.auth import credentials as ga_credentials
@@ -55,11 +50,7 @@ from google.cloud.asset_v1.types import asset_service
 from google.cloud.asset_v1.types import assets
 from google.longrunning import operations_pb2 # type: ignore
 from google.oauth2 import service_account
-from google.protobuf import duration_pb2  # type: ignore
 from google.protobuf import field_mask_pb2  # type: ignore
-from google.protobuf import timestamp_pb2  # type: ignore
-from google.rpc import status_pb2  # type: ignore
-from google.type import expr_pb2  # type: ignore
 import google.auth
 
 
@@ -119,12 +110,12 @@ def test_asset_service_client_from_service_account_info(client_class, transport_
 def test_asset_service_client_service_account_always_use_jwt(transport_class, transport_name):
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=True)
+        transport_class(credentials=creds, always_use_jwt_access=True)
         use_jwt.assert_called_once_with(True)
 
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=False)
+        transport_class(credentials=creds, always_use_jwt_access=False)
         use_jwt.assert_not_called()
 
 
@@ -478,7 +469,7 @@ def test_asset_service_client_client_options_credentials_file(client_class, tran
 def test_asset_service_client_client_options_from_dict():
     with mock.patch('google.cloud.asset_v1.services.asset_service.transports.AssetServiceGrpcTransport.__init__') as grpc_transport:
         grpc_transport.return_value = None
-        client = AssetServiceClient(
+        AssetServiceClient(
             client_options={'api_endpoint': 'squid.clam.whelk'}
         )
         grpc_transport.assert_called_once_with(
@@ -901,7 +892,7 @@ async def test_list_assets_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.ListAssetsResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_assets(
+        await client.list_assets(
             parent='parent_value',
         )
 
@@ -1487,7 +1478,7 @@ async def test_create_feed_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.Feed())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.create_feed(
+        await client.create_feed(
             parent='parent_value',
         )
 
@@ -1735,7 +1726,7 @@ async def test_get_feed_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.Feed())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_feed(
+        await client.get_feed(
             name='name_value',
         )
 
@@ -1963,7 +1954,7 @@ async def test_list_feeds_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.ListFeedsResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_feeds(
+        await client.list_feeds(
             parent='parent_value',
         )
 
@@ -2211,7 +2202,7 @@ async def test_update_feed_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.Feed())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.update_feed(
+        await client.update_feed(
             feed=asset_service.Feed(name='name_value'),
         )
 
@@ -2437,7 +2428,7 @@ async def test_delete_feed_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_feed(
+        await client.delete_feed(
             name='name_value',
         )
 
@@ -2679,7 +2670,7 @@ async def test_search_all_resources_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.SearchAllResourcesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.search_all_resources(
+        await client.search_all_resources(
             scope='scope_value',
             query='query_value',
             asset_types=['asset_types_value'],
@@ -3118,7 +3109,7 @@ async def test_search_all_iam_policies_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.SearchAllIamPoliciesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.search_all_iam_policies(
+        await client.search_all_iam_policies(
             scope='scope_value',
             query='query_value',
         )
@@ -4165,7 +4156,7 @@ async def test_create_saved_query_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.SavedQuery())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.create_saved_query(
+        await client.create_saved_query(
             parent='parent_value',
             saved_query=asset_service.SavedQuery(name='name_value'),
             saved_query_id='saved_query_id_value',
@@ -4419,7 +4410,7 @@ async def test_get_saved_query_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.SavedQuery())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_saved_query(
+        await client.get_saved_query(
             name='name_value',
         )
 
@@ -4651,7 +4642,7 @@ async def test_list_saved_queries_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.ListSavedQueriesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_saved_queries(
+        await client.list_saved_queries(
             parent='parent_value',
         )
 
@@ -5092,7 +5083,7 @@ async def test_update_saved_query_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.SavedQuery())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.update_saved_query(
+        await client.update_saved_query(
             saved_query=asset_service.SavedQuery(name='name_value'),
             update_mask=field_mask_pb2.FieldMask(paths=['paths_value']),
         )
@@ -5323,7 +5314,7 @@ async def test_delete_saved_query_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_saved_query(
+        await client.delete_saved_query(
             name='name_value',
         )
 
@@ -5711,7 +5702,7 @@ async def test_analyze_org_policies_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.AnalyzeOrgPoliciesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.analyze_org_policies(
+        await client.analyze_org_policies(
             scope='scope_value',
             constraint='constraint_value',
             filter='filter_value',
@@ -6155,7 +6146,7 @@ async def test_analyze_org_policy_governed_containers_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.AnalyzeOrgPolicyGovernedContainersResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.analyze_org_policy_governed_containers(
+        await client.analyze_org_policy_governed_containers(
             scope='scope_value',
             constraint='constraint_value',
             filter='filter_value',
@@ -6599,7 +6590,7 @@ async def test_analyze_org_policy_governed_assets_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(asset_service.AnalyzeOrgPolicyGovernedAssetsResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.analyze_org_policy_governed_assets(
+        await client.analyze_org_policy_governed_assets(
             scope='scope_value',
             constraint='constraint_value',
             filter='filter_value',
@@ -6922,7 +6913,7 @@ def test_export_assets_rest_required_fields(request_type=asset_service.ExportAss
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.export_assets(request)
+            client.export_assets(request)
 
             expected_params = [
             ]
@@ -6999,7 +6990,7 @@ def test_export_assets_rest_bad_request(transport: str = 'rest', request_type=as
 
 
 def test_export_assets_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -7105,7 +7096,7 @@ def test_list_assets_rest_required_fields(request_type=asset_service.ListAssetsR
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.list_assets(request)
+            client.list_assets(request)
 
             expected_params = [
             ]
@@ -7392,7 +7383,7 @@ def test_batch_get_assets_history_rest_required_fields(request_type=asset_servic
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.batch_get_assets_history(request)
+            client.batch_get_assets_history(request)
 
             expected_params = [
             ]
@@ -7468,7 +7459,7 @@ def test_batch_get_assets_history_rest_bad_request(transport: str = 'rest', requ
 
 
 def test_batch_get_assets_history_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -7585,7 +7576,7 @@ def test_create_feed_rest_required_fields(request_type=asset_service.CreateFeedR
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.create_feed(request)
+            client.create_feed(request)
 
             expected_params = [
             ]
@@ -7713,7 +7704,7 @@ def test_create_feed_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_create_feed_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -7825,7 +7816,7 @@ def test_get_feed_rest_required_fields(request_type=asset_service.GetFeedRequest
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.get_feed(request)
+            client.get_feed(request)
 
             expected_params = [
             ]
@@ -7953,7 +7944,7 @@ def test_get_feed_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_get_feed_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -8055,7 +8046,7 @@ def test_list_feeds_rest_required_fields(request_type=asset_service.ListFeedsReq
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.list_feeds(request)
+            client.list_feeds(request)
 
             expected_params = [
             ]
@@ -8183,7 +8174,7 @@ def test_list_feeds_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_list_feeds_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -8291,7 +8282,7 @@ def test_update_feed_rest_required_fields(request_type=asset_service.UpdateFeedR
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.update_feed(request)
+            client.update_feed(request)
 
             expected_params = [
             ]
@@ -8419,7 +8410,7 @@ def test_update_feed_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_update_feed_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -8442,7 +8433,6 @@ def test_delete_feed_rest(request_type):
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(type(client.transport._session), 'request') as req:
         # Designate an appropriate value for the returned response.
-        return_value = None
 
         # Wrap the value into a proper Response obj
         response_value = Response()
@@ -8493,7 +8483,6 @@ def test_delete_feed_rest_required_fields(request_type=asset_service.DeleteFeedR
     request = request_type(**request_init)
 
     # Designate an appropriate value for the returned response.
-    return_value = None
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(Session, 'request') as req:
         # We need to mock transcode() because providing default values
@@ -8517,7 +8506,7 @@ def test_delete_feed_rest_required_fields(request_type=asset_service.DeleteFeedR
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.delete_feed(request)
+            client.delete_feed(request)
 
             expected_params = [
             ]
@@ -8596,7 +8585,6 @@ def test_delete_feed_rest_flattened():
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(type(client.transport._session), 'request') as req:
         # Designate an appropriate value for the returned response.
-        return_value = None
 
         # get arguments that satisfy an http rule for this method
         sample_request = {'name': 'sample1/sample2/feeds/sample3'}
@@ -8639,7 +8627,7 @@ def test_delete_feed_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_delete_feed_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -8745,7 +8733,7 @@ def test_search_all_resources_rest_required_fields(request_type=asset_service.Se
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.search_all_resources(request)
+            client.search_all_resources(request)
 
             expected_params = [
             ]
@@ -9038,7 +9026,7 @@ def test_search_all_iam_policies_rest_required_fields(request_type=asset_service
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.search_all_iam_policies(request)
+            client.search_all_iam_policies(request)
 
             expected_params = [
             ]
@@ -9324,7 +9312,7 @@ def test_analyze_iam_policy_rest_required_fields(request_type=asset_service.Anal
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.analyze_iam_policy(request)
+            client.analyze_iam_policy(request)
 
             expected_params = [
             ]
@@ -9400,7 +9388,7 @@ def test_analyze_iam_policy_rest_bad_request(transport: str = 'rest', request_ty
 
 
 def test_analyze_iam_policy_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -9494,7 +9482,7 @@ def test_analyze_iam_policy_longrunning_rest_required_fields(request_type=asset_
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.analyze_iam_policy_longrunning(request)
+            client.analyze_iam_policy_longrunning(request)
 
             expected_params = [
             ]
@@ -9571,7 +9559,7 @@ def test_analyze_iam_policy_longrunning_rest_bad_request(transport: str = 'rest'
 
 
 def test_analyze_iam_policy_longrunning_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -9682,7 +9670,7 @@ def test_analyze_move_rest_required_fields(request_type=asset_service.AnalyzeMov
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.analyze_move(request)
+            client.analyze_move(request)
 
             expected_params = [
                 (
@@ -9762,7 +9750,7 @@ def test_analyze_move_rest_bad_request(transport: str = 'rest', request_type=ass
 
 
 def test_analyze_move_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -9869,7 +9857,7 @@ def test_query_assets_rest_required_fields(request_type=asset_service.QueryAsset
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.query_assets(request)
+            client.query_assets(request)
 
             expected_params = [
             ]
@@ -9945,7 +9933,7 @@ def test_query_assets_rest_bad_request(transport: str = 'rest', request_type=ass
 
 
 def test_query_assets_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -10066,7 +10054,7 @@ def test_create_saved_query_rest_required_fields(request_type=asset_service.Crea
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.create_saved_query(request)
+            client.create_saved_query(request)
 
             expected_params = [
                 (
@@ -10203,7 +10191,7 @@ def test_create_saved_query_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_create_saved_query_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -10313,7 +10301,7 @@ def test_get_saved_query_rest_required_fields(request_type=asset_service.GetSave
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.get_saved_query(request)
+            client.get_saved_query(request)
 
             expected_params = [
             ]
@@ -10441,7 +10429,7 @@ def test_get_saved_query_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_get_saved_query_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -10547,7 +10535,7 @@ def test_list_saved_queries_rest_required_fields(request_type=asset_service.List
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.list_saved_queries(request)
+            client.list_saved_queries(request)
 
             expected_params = [
             ]
@@ -10839,7 +10827,7 @@ def test_update_saved_query_rest_required_fields(request_type=asset_service.Upda
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.update_saved_query(request)
+            client.update_saved_query(request)
 
             expected_params = [
             ]
@@ -10970,7 +10958,7 @@ def test_update_saved_query_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_update_saved_query_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -10993,7 +10981,6 @@ def test_delete_saved_query_rest(request_type):
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(type(client.transport._session), 'request') as req:
         # Designate an appropriate value for the returned response.
-        return_value = None
 
         # Wrap the value into a proper Response obj
         response_value = Response()
@@ -11044,7 +11031,6 @@ def test_delete_saved_query_rest_required_fields(request_type=asset_service.Dele
     request = request_type(**request_init)
 
     # Designate an appropriate value for the returned response.
-    return_value = None
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(Session, 'request') as req:
         # We need to mock transcode() because providing default values
@@ -11068,7 +11054,7 @@ def test_delete_saved_query_rest_required_fields(request_type=asset_service.Dele
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.delete_saved_query(request)
+            client.delete_saved_query(request)
 
             expected_params = [
             ]
@@ -11147,7 +11133,6 @@ def test_delete_saved_query_rest_flattened():
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(type(client.transport._session), 'request') as req:
         # Designate an appropriate value for the returned response.
-        return_value = None
 
         # get arguments that satisfy an http rule for this method
         sample_request = {'name': 'sample1/sample2/savedQueries/sample3'}
@@ -11190,7 +11175,7 @@ def test_delete_saved_query_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_delete_saved_query_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -11301,7 +11286,7 @@ def test_batch_get_effective_iam_policies_rest_required_fields(request_type=asse
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.batch_get_effective_iam_policies(request)
+            client.batch_get_effective_iam_policies(request)
 
             expected_params = [
                 (
@@ -11381,7 +11366,7 @@ def test_batch_get_effective_iam_policies_rest_bad_request(transport: str = 'res
 
 
 def test_batch_get_effective_iam_policies_rest_error():
-    client = AssetServiceClient(
+    AssetServiceClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -11494,7 +11479,7 @@ def test_analyze_org_policies_rest_required_fields(request_type=asset_service.An
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.analyze_org_policies(request)
+            client.analyze_org_policies(request)
 
             expected_params = [
                 (
@@ -11798,7 +11783,7 @@ def test_analyze_org_policy_governed_containers_rest_required_fields(request_typ
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.analyze_org_policy_governed_containers(request)
+            client.analyze_org_policy_governed_containers(request)
 
             expected_params = [
                 (
@@ -12102,7 +12087,7 @@ def test_analyze_org_policy_governed_assets_rest_required_fields(request_type=as
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.analyze_org_policy_governed_assets(request)
+            client.analyze_org_policy_governed_assets(request)
 
             expected_params = [
                 (
@@ -12305,7 +12290,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = AssetServiceClient(
+        AssetServiceClient(
             credentials=ga_credentials.AnonymousCredentials(),
             transport=transport,
         )
@@ -12315,7 +12300,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = AssetServiceClient(
+        AssetServiceClient(
             client_options={"credentials_file": "credentials.json"},
             transport=transport,
         )
@@ -12327,7 +12312,7 @@ def test_credentials_transport_error():
     options = client_options.ClientOptions()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = AssetServiceClient(
+        AssetServiceClient(
             client_options=options,
             transport=transport,
         )
@@ -12336,7 +12321,7 @@ def test_credentials_transport_error():
     options = mock.Mock()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = AssetServiceClient(
+        AssetServiceClient(
             client_options=options,
             credentials=ga_credentials.AnonymousCredentials()
         )
@@ -12346,7 +12331,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = AssetServiceClient(
+        AssetServiceClient(
             client_options={"scopes": ["1", "2"]},
             transport=transport,
         )
@@ -12409,7 +12394,7 @@ def test_transport_grpc_default():
 def test_asset_service_base_transport_error():
     # Passing both a credentials object and credentials_file should raise an error
     with pytest.raises(core_exceptions.DuplicateCredentialArgs):
-        transport = transports.AssetServiceTransport(
+        transports.AssetServiceTransport(
             credentials=ga_credentials.AnonymousCredentials(),
             credentials_file="credentials.json"
         )
@@ -12477,7 +12462,7 @@ def test_asset_service_base_transport_with_credentials_file():
     with mock.patch.object(google.auth, 'load_credentials_from_file', autospec=True) as load_creds, mock.patch('google.cloud.asset_v1.services.asset_service.transports.AssetServiceTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         load_creds.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.AssetServiceTransport(
+        transports.AssetServiceTransport(
             credentials_file="credentials.json",
             quota_project_id="octopus",
         )
@@ -12495,7 +12480,7 @@ def test_asset_service_base_transport_with_adc():
     with mock.patch.object(google.auth, 'default', autospec=True) as adc, mock.patch('google.cloud.asset_v1.services.asset_service.transports.AssetServiceTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.AssetServiceTransport()
+        transports.AssetServiceTransport()
         adc.assert_called_once()
 
 
@@ -12789,7 +12774,7 @@ def test_asset_service_grpc_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 def test_asset_service_grpc_asyncio_transport_channel():
@@ -12802,7 +12787,7 @@ def test_asset_service_grpc_asyncio_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 # Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
@@ -13144,7 +13129,7 @@ def test_client_with_default_client_info():
     client_info = gapic_v1.client_info.ClientInfo()
 
     with mock.patch.object(transports.AssetServiceTransport, '_prep_wrapped_messages') as prep:
-        client = AssetServiceClient(
+        AssetServiceClient(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )
@@ -13152,7 +13137,7 @@ def test_client_with_default_client_info():
 
     with mock.patch.object(transports.AssetServiceTransport, '_prep_wrapped_messages') as prep:
         transport_class = AssetServiceClient.get_transport_class()
-        transport = transport_class(
+        transport_class(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )
@@ -13322,7 +13307,7 @@ def test_get_operation_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = operations_pb2.Operation()
 
-        response = client.get_operation(
+        client.get_operation(
             request={
                 "name": "locations",
             }
@@ -13339,7 +13324,7 @@ async def test_get_operation_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             operations_pb2.Operation()
         )
-        response = await client.get_operation(
+        await client.get_operation(
             request={
                 "name": "locations",
             }

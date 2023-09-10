@@ -16,14 +16,12 @@ from __future__ import absolute_import
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import os
-import sys
 import tempfile
 import typing
 import nox  # type: ignore
 
 from contextlib import contextmanager
 from os import path
-import shutil
 
 
 nox.options.error_on_missing_interpreters = True
@@ -218,13 +216,13 @@ def showcase_library(
             "python",
             "-m",
             "grpc_tools.protoc",
-            f"--experimental_allow_proto3_optional",
+            "--experimental_allow_proto3_optional",
             f"--descriptor_set_in={tmp_dir}{path.sep}showcase.desc",
             opts,
             f"--python_gapic_out={tmp_dir}",
-            f"google/showcase/v1beta1/echo.proto",
-            f"google/showcase/v1beta1/identity.proto",
-            f"google/showcase/v1beta1/messaging.proto",
+            "google/showcase/v1beta1/echo.proto",
+            "google/showcase/v1beta1/identity.proto",
+            "google/showcase/v1beta1/messaging.proto",
         )
         session.run(
             *cmd_tup, external=True,

@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 from collections import OrderedDict
-from typing import Dict, Type
 
 from .base import CloudRedisTransport
 from .grpc import CloudRedisGrpcTransport

@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers_async
@@ -29,7 +29,6 @@ from google.cloud.location import locations_pb2 # type: ignore
 from google.cloud.redis_v1.types import cloud_redis
 from google.longrunning import operations_pb2 # type: ignore
 from .base import CloudRedisTransport, DEFAULT_CLIENT_INFO
-from .grpc import CloudRedisGrpcTransport
 
 
 class CloudRedisGrpcAsyncIOTransport(CloudRedisTransport):

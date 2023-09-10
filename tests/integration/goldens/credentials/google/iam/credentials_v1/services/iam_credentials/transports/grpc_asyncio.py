@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers_async
@@ -26,7 +26,6 @@ from grpc.experimental import aio  # type: ignore
 
 from google.iam.credentials_v1.types import common
 from .base import IAMCredentialsTransport, DEFAULT_CLIENT_INFO
-from .grpc import IAMCredentialsGrpcTransport
 
 
 class IAMCredentialsGrpcAsyncIOTransport(IAMCredentialsTransport):

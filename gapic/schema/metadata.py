@@ -28,7 +28,7 @@ with the things they describe for easy access in templates.
 
 import dataclasses
 import re
-from typing import FrozenSet, Set, Tuple, Optional
+from typing import Set, Tuple, Optional
 
 from google.protobuf import descriptor_pb2
 

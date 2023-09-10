@@ -23,10 +23,7 @@ except ImportError:  # pragma: NO COVER
 
 import grpc
 from grpc.experimental import aio
-import math
 import pytest
-from proto.marshal.rules.dates import DurationRule, TimestampRule
-from proto.marshal.rules import wrappers
 
 from google.api import monitored_resource_pb2  # type: ignore
 from google.api_core import client_options
@@ -34,7 +31,6 @@ from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers
 from google.api_core import grpc_helpers_async
-from google.api_core import path_template
 from google.auth import credentials as ga_credentials
 from google.auth.exceptions import MutualTLSChannelError
 from google.cloud.logging_v2.services.logging_service_v2 import LoggingServiceV2AsyncClient
@@ -43,14 +39,8 @@ from google.cloud.logging_v2.services.logging_service_v2 import pagers
 from google.cloud.logging_v2.services.logging_service_v2 import transports
 from google.cloud.logging_v2.types import log_entry
 from google.cloud.logging_v2.types import logging
-from google.logging.type import http_request_pb2  # type: ignore
-from google.logging.type import log_severity_pb2  # type: ignore
 from google.longrunning import operations_pb2 # type: ignore
 from google.oauth2 import service_account
-from google.protobuf import any_pb2  # type: ignore
-from google.protobuf import duration_pb2  # type: ignore
-from google.protobuf import struct_pb2  # type: ignore
-from google.protobuf import timestamp_pb2  # type: ignore
 import google.auth
 
 
@@ -105,12 +95,12 @@ def test_logging_service_v2_client_from_service_account_info(client_class, trans
 def test_logging_service_v2_client_service_account_always_use_jwt(transport_class, transport_name):
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=True)
+        transport_class(credentials=creds, always_use_jwt_access=True)
         use_jwt.assert_called_once_with(True)
 
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=False)
+        transport_class(credentials=creds, always_use_jwt_access=False)
         use_jwt.assert_not_called()
 
 
@@ -454,7 +444,7 @@ def test_logging_service_v2_client_client_options_credentials_file(client_class,
 def test_logging_service_v2_client_client_options_from_dict():
     with mock.patch('google.cloud.logging_v2.services.logging_service_v2.transports.LoggingServiceV2GrpcTransport.__init__') as grpc_transport:
         grpc_transport.return_value = None
-        client = LoggingServiceV2Client(
+        LoggingServiceV2Client(
             client_options={'api_endpoint': 'squid.clam.whelk'}
         )
         grpc_transport.assert_called_once_with(
@@ -729,7 +719,7 @@ async def test_delete_log_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_log(
+        await client.delete_log(
             log_name='log_name_value',
         )
 
@@ -909,7 +899,7 @@ async def test_write_log_entries_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(logging.WriteLogEntriesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.write_log_entries(
+        await client.write_log_entries(
             log_name='log_name_value',
             resource=monitored_resource_pb2.MonitoredResource(type='type_value'),
             labels={'key_value': 'value_value'},
@@ -1103,7 +1093,7 @@ async def test_list_log_entries_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(logging.ListLogEntriesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_log_entries(
+        await client.list_log_entries(
             resource_names=['resource_names_value'],
             filter='filter_value',
             order_by='order_by_value',
@@ -1810,7 +1800,7 @@ async def test_list_logs_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(logging.ListLogsResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_logs(
+        await client.list_logs(
             parent='parent_value',
         )
 
@@ -2104,7 +2094,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = LoggingServiceV2Client(
+        LoggingServiceV2Client(
             credentials=ga_credentials.AnonymousCredentials(),
             transport=transport,
         )
@@ -2114,7 +2104,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = LoggingServiceV2Client(
+        LoggingServiceV2Client(
             client_options={"credentials_file": "credentials.json"},
             transport=transport,
         )
@@ -2126,7 +2116,7 @@ def test_credentials_transport_error():
     options = client_options.ClientOptions()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = LoggingServiceV2Client(
+        LoggingServiceV2Client(
             client_options=options,
             transport=transport,
         )
@@ -2135,7 +2125,7 @@ def test_credentials_transport_error():
     options = mock.Mock()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = LoggingServiceV2Client(
+        LoggingServiceV2Client(
             client_options=options,
             credentials=ga_credentials.AnonymousCredentials()
         )
@@ -2145,7 +2135,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = LoggingServiceV2Client(
+        LoggingServiceV2Client(
             client_options={"scopes": ["1", "2"]},
             transport=transport,
         )
@@ -2206,7 +2196,7 @@ def test_transport_grpc_default():
 def test_logging_service_v2_base_transport_error():
     # Passing both a credentials object and credentials_file should raise an error
     with pytest.raises(core_exceptions.DuplicateCredentialArgs):
-        transport = transports.LoggingServiceV2Transport(
+        transports.LoggingServiceV2Transport(
             credentials=ga_credentials.AnonymousCredentials(),
             credentials_file="credentials.json"
         )
@@ -2254,7 +2244,7 @@ def test_logging_service_v2_base_transport_with_credentials_file():
     with mock.patch.object(google.auth, 'load_credentials_from_file', autospec=True) as load_creds, mock.patch('google.cloud.logging_v2.services.logging_service_v2.transports.LoggingServiceV2Transport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         load_creds.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.LoggingServiceV2Transport(
+        transports.LoggingServiceV2Transport(
             credentials_file="credentials.json",
             quota_project_id="octopus",
         )
@@ -2276,7 +2266,7 @@ def test_logging_service_v2_base_transport_with_adc():
     with mock.patch.object(google.auth, 'default', autospec=True) as adc, mock.patch('google.cloud.logging_v2.services.logging_service_v2.transports.LoggingServiceV2Transport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.LoggingServiceV2Transport()
+        transports.LoggingServiceV2Transport()
         adc.assert_called_once()
 
 
@@ -2462,7 +2452,7 @@ def test_logging_service_v2_grpc_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 def test_logging_service_v2_grpc_asyncio_transport_channel():
@@ -2475,7 +2465,7 @@ def test_logging_service_v2_grpc_asyncio_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 # Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
@@ -2673,7 +2663,7 @@ def test_client_with_default_client_info():
     client_info = gapic_v1.client_info.ClientInfo()
 
     with mock.patch.object(transports.LoggingServiceV2Transport, '_prep_wrapped_messages') as prep:
-        client = LoggingServiceV2Client(
+        LoggingServiceV2Client(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )
@@ -2681,7 +2671,7 @@ def test_client_with_default_client_info():
 
     with mock.patch.object(transports.LoggingServiceV2Transport, '_prep_wrapped_messages') as prep:
         transport_class = LoggingServiceV2Client.get_transport_class()
-        transport = transport_class(
+        transport_class(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )
@@ -2803,7 +2793,7 @@ def test_cancel_operation_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = None
 
-        response = client.cancel_operation(
+        client.cancel_operation(
             request={
                 "name": "locations",
             }
@@ -2820,7 +2810,7 @@ async def test_cancel_operation_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             None
         )
-        response = await client.cancel_operation(
+        await client.cancel_operation(
             request={
                 "name": "locations",
             }
@@ -2932,7 +2922,7 @@ def test_get_operation_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = operations_pb2.Operation()
 
-        response = client.get_operation(
+        client.get_operation(
             request={
                 "name": "locations",
             }
@@ -2949,7 +2939,7 @@ async def test_get_operation_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             operations_pb2.Operation()
         )
-        response = await client.get_operation(
+        await client.get_operation(
             request={
                 "name": "locations",
             }
@@ -3061,7 +3051,7 @@ def test_list_operations_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = operations_pb2.ListOperationsResponse()
 
-        response = client.list_operations(
+        client.list_operations(
             request={
                 "name": "locations",
             }
@@ -3078,7 +3068,7 @@ async def test_list_operations_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             operations_pb2.ListOperationsResponse()
         )
-        response = await client.list_operations(
+        await client.list_operations(
             request={
                 "name": "locations",
             }

@@ -66,7 +66,7 @@ def convert_py_dict(key_value_pairs: Sequence[Tuple[str, str]]) -> libcst.Dict:
     for key, value in key_value_pairs:
         if not (isinstance(key, str) and isinstance(value, str)):
             raise ValueError(
-                f"convert_py_dict supports only string keys and values.")
+                "convert_py_dict supports only string keys and values.")
         elements.append(
             libcst.DictElement(
                 libcst.SimpleString(

@@ -17,7 +17,6 @@
 # source: snippet_config_language.proto
 # type: ignore
 """Generated protocol buffer code."""
-from google.protobuf import descriptor_pb2 as google_dot_protobuf_dot_descriptor__pb2
 from google.protobuf.internal import builder as _builder
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
@@ -33,7 +32,7 @@ DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(
     DESCRIPTOR, 'snippet_config_language_pb2', globals())
-if _descriptor._USE_C_DESCRIPTORS == False:
+if _descriptor._USE_C_DESCRIPTORS is False:
 
     DESCRIPTOR._options = None
     DESCRIPTOR._serialized_options = b'\n3com.google.cloud.tools.snippetgen.configlanguage.v1B\032SnippetConfigLanguageProtoP\001\252\002/Google.Cloud.Tools.SnippetGen.ConfigLanguage.V1\312\002/Google\\Cloud\\Tools\\SnippetGen\\ConfigLanguage\\V1\352\0024Google::Cloud::Tools::SnippetGen::ConfigLanguage::V1'

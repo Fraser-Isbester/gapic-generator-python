@@ -13,19 +13,17 @@
 # limitations under the License.
 
 import jinja2
-import yaml
-import itertools
 import re
 import os
 import pathlib
 import typing
-from typing import Any, DefaultDict, Dict, Mapping, Optional, Tuple
+from typing import Any, DefaultDict, Dict, Optional, Tuple
 from hashlib import sha256
 from collections import OrderedDict, defaultdict
-from gapic.samplegen_utils.utils import coerce_response_name, is_valid_sample_cfg, render_format_string
+from gapic.samplegen_utils.utils import coerce_response_name, render_format_string
 from gapic.samplegen_utils.types import DuplicateSample
-from gapic.samplegen_utils import snippet_index, snippet_metadata_pb2
-from gapic.samplegen import manifest, samplegen
+from gapic.samplegen_utils import snippet_index
+from gapic.samplegen import samplegen
 from gapic.generator import formatter
 from gapic.schema import api
 from gapic import utils
