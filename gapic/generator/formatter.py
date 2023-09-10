@@ -39,3 +39,18 @@ def fix_whitespace(code: str) -> str:
 
     # All files shall end in one and exactly one line break.
     return f'{code.rstrip()}\n'
+
+
+def isort(code: str) -> str:
+    r"""Sort imports using isort.
+    
+    Args:
+        code (str): A string of code to be formatted.
+    
+        Returns:
+            str: Formatted code.
+    """
+
+    import isort
+
+    return isort.code("import b\nimport a\n")
