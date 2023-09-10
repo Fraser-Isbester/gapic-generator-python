@@ -18,7 +18,7 @@ that will eventually move somewhere else (probably)."""
 import os
 import yaml
 
-from typing import (Generator, Tuple, List, Union)
+from typing import (Generator, Tuple, List)
 
 from gapic.samplegen_utils import types
 

@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 import abc
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
+from typing import Awaitable, Callable, Optional, Sequence, Union
 
 from google.iam.credentials_v1 import gapic_version as package_version
 

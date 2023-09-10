@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import yaml
 import pytest
 
 from textwrap import dedent
@@ -26,8 +25,7 @@ from google.protobuf import json_format
 
 import gapic.samplegen.samplegen as samplegen
 import gapic.samplegen_utils.types as types
-import gapic.samplegen_utils.yaml as gapic_yaml
-from gapic.schema import api, metadata, naming
+from gapic.schema import api, metadata
 import gapic.schema.wrappers as wrappers
 from gapic.utils import Options
 

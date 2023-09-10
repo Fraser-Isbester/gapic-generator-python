@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import typing
 
-from google.protobuf import descriptor_pb2
 
 from test_utils.test_utils import make_doc_meta
 

@@ -17,7 +17,7 @@ from typing import Optional, Dict
 
 from google.protobuf import json_format
 
-from gapic.schema import api, metadata
+from gapic.schema import api
 from gapic.samplegen_utils import snippet_metadata_pb2  # type: ignore
 from gapic.samplegen_utils import types
 

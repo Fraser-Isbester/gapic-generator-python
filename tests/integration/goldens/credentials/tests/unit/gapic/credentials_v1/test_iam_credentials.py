@@ -23,13 +23,10 @@ except ImportError:  # pragma: NO COVER
 
 import grpc
 from grpc.experimental import aio
-from collections.abc import Iterable
 from google.protobuf import json_format
 import json
-import math
 import pytest
-from proto.marshal.rules.dates import DurationRule, TimestampRule
-from proto.marshal.rules import wrappers
+from proto.marshal.rules.dates import DurationRule
 from requests import Response
 from requests import Request, PreparedRequest
 from requests.sessions import Session
@@ -49,7 +46,6 @@ from google.iam.credentials_v1.services.iam_credentials import transports
 from google.iam.credentials_v1.types import common
 from google.oauth2 import service_account
 from google.protobuf import duration_pb2  # type: ignore
-from google.protobuf import timestamp_pb2  # type: ignore
 import google.auth
 
 
@@ -109,12 +105,12 @@ def test_iam_credentials_client_from_service_account_info(client_class, transpor
 def test_iam_credentials_client_service_account_always_use_jwt(transport_class, transport_name):
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=True)
+        transport_class(credentials=creds, always_use_jwt_access=True)
         use_jwt.assert_called_once_with(True)
 
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=False)
+        transport_class(credentials=creds, always_use_jwt_access=False)
         use_jwt.assert_not_called()
 
 
@@ -468,7 +464,7 @@ def test_iam_credentials_client_client_options_credentials_file(client_class, tr
 def test_iam_credentials_client_client_options_from_dict():
     with mock.patch('google.iam.credentials_v1.services.iam_credentials.transports.IAMCredentialsGrpcTransport.__init__') as grpc_transport:
         grpc_transport.return_value = None
-        client = IAMCredentialsClient(
+        IAMCredentialsClient(
             client_options={'api_endpoint': 'squid.clam.whelk'}
         )
         grpc_transport.assert_called_once_with(
@@ -758,7 +754,7 @@ async def test_generate_access_token_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(common.GenerateAccessTokenResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.generate_access_token(
+        await client.generate_access_token(
             name='name_value',
             delegates=['delegates_value'],
             scope=['scope_value'],
@@ -1018,7 +1014,7 @@ async def test_generate_id_token_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(common.GenerateIdTokenResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.generate_id_token(
+        await client.generate_id_token(
             name='name_value',
             delegates=['delegates_value'],
             audience='audience_value',
@@ -1279,7 +1275,7 @@ async def test_sign_blob_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(common.SignBlobResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.sign_blob(
+        await client.sign_blob(
             name='name_value',
             delegates=['delegates_value'],
             payload=b'payload_blob',
@@ -1535,7 +1531,7 @@ async def test_sign_jwt_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(common.SignJwtResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.sign_jwt(
+        await client.sign_jwt(
             name='name_value',
             delegates=['delegates_value'],
             payload='payload_value',
@@ -1675,7 +1671,7 @@ def test_generate_access_token_rest_required_fields(request_type=common.Generate
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.generate_access_token(request)
+            client.generate_access_token(request)
 
             expected_params = [
             ]
@@ -1809,7 +1805,7 @@ def test_generate_access_token_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_generate_access_token_rest_error():
-    client = IAMCredentialsClient(
+    IAMCredentialsClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -1918,7 +1914,7 @@ def test_generate_id_token_rest_required_fields(request_type=common.GenerateIdTo
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.generate_id_token(request)
+            client.generate_id_token(request)
 
             expected_params = [
             ]
@@ -2052,7 +2048,7 @@ def test_generate_id_token_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_generate_id_token_rest_error():
-    client = IAMCredentialsClient(
+    IAMCredentialsClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -2163,7 +2159,7 @@ def test_sign_blob_rest_required_fields(request_type=common.SignBlobRequest):
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.sign_blob(request)
+            client.sign_blob(request)
 
             expected_params = [
             ]
@@ -2295,7 +2291,7 @@ def test_sign_blob_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_sign_blob_rest_error():
-    client = IAMCredentialsClient(
+    IAMCredentialsClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -2406,7 +2402,7 @@ def test_sign_jwt_rest_required_fields(request_type=common.SignJwtRequest):
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.sign_jwt(request)
+            client.sign_jwt(request)
 
             expected_params = [
             ]
@@ -2538,7 +2534,7 @@ def test_sign_jwt_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_sign_jwt_rest_error():
-    client = IAMCredentialsClient(
+    IAMCredentialsClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -2550,7 +2546,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = IAMCredentialsClient(
+        IAMCredentialsClient(
             credentials=ga_credentials.AnonymousCredentials(),
             transport=transport,
         )
@@ -2560,7 +2556,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = IAMCredentialsClient(
+        IAMCredentialsClient(
             client_options={"credentials_file": "credentials.json"},
             transport=transport,
         )
@@ -2572,7 +2568,7 @@ def test_credentials_transport_error():
     options = client_options.ClientOptions()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = IAMCredentialsClient(
+        IAMCredentialsClient(
             client_options=options,
             transport=transport,
         )
@@ -2581,7 +2577,7 @@ def test_credentials_transport_error():
     options = mock.Mock()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = IAMCredentialsClient(
+        IAMCredentialsClient(
             client_options=options,
             credentials=ga_credentials.AnonymousCredentials()
         )
@@ -2591,7 +2587,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = IAMCredentialsClient(
+        IAMCredentialsClient(
             client_options={"scopes": ["1", "2"]},
             transport=transport,
         )
@@ -2654,7 +2650,7 @@ def test_transport_grpc_default():
 def test_iam_credentials_base_transport_error():
     # Passing both a credentials object and credentials_file should raise an error
     with pytest.raises(core_exceptions.DuplicateCredentialArgs):
-        transport = transports.IAMCredentialsTransport(
+        transports.IAMCredentialsTransport(
             credentials=ga_credentials.AnonymousCredentials(),
             credentials_file="credentials.json"
         )
@@ -2697,7 +2693,7 @@ def test_iam_credentials_base_transport_with_credentials_file():
     with mock.patch.object(google.auth, 'load_credentials_from_file', autospec=True) as load_creds, mock.patch('google.iam.credentials_v1.services.iam_credentials.transports.IAMCredentialsTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         load_creds.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.IAMCredentialsTransport(
+        transports.IAMCredentialsTransport(
             credentials_file="credentials.json",
             quota_project_id="octopus",
         )
@@ -2715,7 +2711,7 @@ def test_iam_credentials_base_transport_with_adc():
     with mock.patch.object(google.auth, 'default', autospec=True) as adc, mock.patch('google.iam.credentials_v1.services.iam_credentials.transports.IAMCredentialsTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.IAMCredentialsTransport()
+        transports.IAMCredentialsTransport()
         adc.assert_called_once()
 
 
@@ -2935,7 +2931,7 @@ def test_iam_credentials_grpc_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 def test_iam_credentials_grpc_asyncio_transport_channel():
@@ -2948,7 +2944,7 @@ def test_iam_credentials_grpc_asyncio_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 # Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
@@ -3146,7 +3142,7 @@ def test_client_with_default_client_info():
     client_info = gapic_v1.client_info.ClientInfo()
 
     with mock.patch.object(transports.IAMCredentialsTransport, '_prep_wrapped_messages') as prep:
-        client = IAMCredentialsClient(
+        IAMCredentialsClient(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )
@@ -3154,7 +3150,7 @@ def test_client_with_default_client_info():
 
     with mock.patch.object(transports.IAMCredentialsTransport, '_prep_wrapped_messages') as prep:
         transport_class = IAMCredentialsClient.get_transport_class()
-        transport = transport_class(
+        transport_class(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )

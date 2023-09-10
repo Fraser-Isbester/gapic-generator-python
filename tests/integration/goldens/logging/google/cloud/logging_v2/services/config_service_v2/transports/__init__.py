@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 from collections import OrderedDict
-from typing import Dict, Type
 
 from .base import ConfigServiceV2Transport
 from .grpc import ConfigServiceV2GrpcTransport

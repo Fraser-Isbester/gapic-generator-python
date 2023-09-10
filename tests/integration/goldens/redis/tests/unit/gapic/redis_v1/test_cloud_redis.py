@@ -23,13 +23,10 @@ except ImportError:  # pragma: NO COVER
 
 import grpc
 from grpc.experimental import aio
-from collections.abc import Iterable
 from google.protobuf import json_format
 import json
-import math
 import pytest
-from proto.marshal.rules.dates import DurationRule, TimestampRule
-from proto.marshal.rules import wrappers
+from proto.marshal.rules.dates import TimestampRule
 from requests import Response
 from requests import Request, PreparedRequest
 from requests.sessions import Session
@@ -42,7 +39,6 @@ from google.api_core import gapic_v1
 from google.api_core import grpc_helpers
 from google.api_core import grpc_helpers_async
 from google.api_core import operation
-from google.api_core import operation_async  # type: ignore
 from google.api_core import operations_v1
 from google.api_core import path_template
 from google.auth import credentials as ga_credentials
@@ -55,12 +51,8 @@ from google.cloud.redis_v1.services.cloud_redis import transports
 from google.cloud.redis_v1.types import cloud_redis
 from google.longrunning import operations_pb2 # type: ignore
 from google.oauth2 import service_account
-from google.protobuf import duration_pb2  # type: ignore
-from google.protobuf import empty_pb2  # type: ignore
 from google.protobuf import field_mask_pb2  # type: ignore
 from google.protobuf import timestamp_pb2  # type: ignore
-from google.type import dayofweek_pb2  # type: ignore
-from google.type import timeofday_pb2  # type: ignore
 import google.auth
 
 
@@ -120,12 +112,12 @@ def test_cloud_redis_client_from_service_account_info(client_class, transport_na
 def test_cloud_redis_client_service_account_always_use_jwt(transport_class, transport_name):
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=True)
+        transport_class(credentials=creds, always_use_jwt_access=True)
         use_jwt.assert_called_once_with(True)
 
     with mock.patch.object(service_account.Credentials, 'with_always_use_jwt_access', create=True) as use_jwt:
         creds = service_account.Credentials(None, None, None)
-        transport = transport_class(credentials=creds, always_use_jwt_access=False)
+        transport_class(credentials=creds, always_use_jwt_access=False)
         use_jwt.assert_not_called()
 
 
@@ -479,7 +471,7 @@ def test_cloud_redis_client_client_options_credentials_file(client_class, transp
 def test_cloud_redis_client_client_options_from_dict():
     with mock.patch('google.cloud.redis_v1.services.cloud_redis.transports.CloudRedisGrpcTransport.__init__') as grpc_transport:
         grpc_transport.return_value = None
-        client = CloudRedisClient(
+        CloudRedisClient(
             client_options={'api_endpoint': 'squid.clam.whelk'}
         )
         grpc_transport.assert_called_once_with(
@@ -760,7 +752,7 @@ async def test_list_instances_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(cloud_redis.ListInstancesResponse())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_instances(
+        await client.list_instances(
             parent='parent_value',
         )
 
@@ -1288,7 +1280,7 @@ async def test_get_instance_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(cloud_redis.Instance())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_instance(
+        await client.get_instance(
             name='name_value',
         )
 
@@ -1520,7 +1512,7 @@ async def test_get_instance_auth_string_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(cloud_redis.InstanceAuthString())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_instance_auth_string(
+        await client.get_instance_auth_string(
             name='name_value',
         )
 
@@ -1760,7 +1752,7 @@ async def test_create_instance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.create_instance(
+        await client.create_instance(
             parent='parent_value',
             instance_id='instance_id_value',
             instance=cloud_redis.Instance(name='name_value'),
@@ -2005,7 +1997,7 @@ async def test_update_instance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.update_instance(
+        await client.update_instance(
             update_mask=field_mask_pb2.FieldMask(paths=['paths_value']),
             instance=cloud_redis.Instance(name='name_value'),
         )
@@ -2245,7 +2237,7 @@ async def test_upgrade_instance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.upgrade_instance(
+        await client.upgrade_instance(
             name='name_value',
             redis_version='redis_version_value',
         )
@@ -2485,7 +2477,7 @@ async def test_import_instance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.import_instance(
+        await client.import_instance(
             name='name_value',
             input_config=cloud_redis.InputConfig(gcs_source=cloud_redis.GcsSource(uri='uri_value')),
         )
@@ -2725,7 +2717,7 @@ async def test_export_instance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.export_instance(
+        await client.export_instance(
             name='name_value',
             output_config=cloud_redis.OutputConfig(gcs_destination=cloud_redis.GcsDestination(uri='uri_value')),
         )
@@ -2965,7 +2957,7 @@ async def test_failover_instance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.failover_instance(
+        await client.failover_instance(
             name='name_value',
             data_protection_mode=cloud_redis.FailoverInstanceRequest.DataProtectionMode.LIMITED_DATA_LOSS,
         )
@@ -3200,7 +3192,7 @@ async def test_delete_instance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_instance(
+        await client.delete_instance(
             name='name_value',
         )
 
@@ -3438,7 +3430,7 @@ async def test_reschedule_maintenance_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.reschedule_maintenance(
+        await client.reschedule_maintenance(
             name='name_value',
             reschedule_type=cloud_redis.RescheduleMaintenanceRequest.RescheduleType.IMMEDIATE,
             schedule_time=timestamp_pb2.Timestamp(seconds=751),
@@ -3575,7 +3567,7 @@ def test_list_instances_rest_required_fields(request_type=cloud_redis.ListInstan
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.list_instances(request)
+            client.list_instances(request)
 
             expected_params = [
             ]
@@ -3914,7 +3906,7 @@ def test_get_instance_rest_required_fields(request_type=cloud_redis.GetInstanceR
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.get_instance(request)
+            client.get_instance(request)
 
             expected_params = [
             ]
@@ -4042,7 +4034,7 @@ def test_get_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_get_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -4146,7 +4138,7 @@ def test_get_instance_auth_string_rest_required_fields(request_type=cloud_redis.
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.get_instance_auth_string(request)
+            client.get_instance_auth_string(request)
 
             expected_params = [
             ]
@@ -4274,7 +4266,7 @@ def test_get_instance_auth_string_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_get_instance_auth_string_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -4383,7 +4375,7 @@ def test_create_instance_rest_required_fields(request_type=cloud_redis.CreateIns
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.create_instance(request)
+            client.create_instance(request)
 
             expected_params = [
                 (
@@ -4520,7 +4512,7 @@ def test_create_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_create_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -4617,7 +4609,7 @@ def test_update_instance_rest_required_fields(request_type=cloud_redis.UpdateIns
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.update_instance(request)
+            client.update_instance(request)
 
             expected_params = [
             ]
@@ -4748,7 +4740,7 @@ def test_update_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_update_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -4851,7 +4843,7 @@ def test_upgrade_instance_rest_required_fields(request_type=cloud_redis.UpgradeI
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.upgrade_instance(request)
+            client.upgrade_instance(request)
 
             expected_params = [
             ]
@@ -4981,7 +4973,7 @@ def test_upgrade_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_upgrade_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -5080,7 +5072,7 @@ def test_import_instance_rest_required_fields(request_type=cloud_redis.ImportIns
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.import_instance(request)
+            client.import_instance(request)
 
             expected_params = [
             ]
@@ -5210,7 +5202,7 @@ def test_import_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_import_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -5309,7 +5301,7 @@ def test_export_instance_rest_required_fields(request_type=cloud_redis.ExportIns
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.export_instance(request)
+            client.export_instance(request)
 
             expected_params = [
             ]
@@ -5439,7 +5431,7 @@ def test_export_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_export_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -5538,7 +5530,7 @@ def test_failover_instance_rest_required_fields(request_type=cloud_redis.Failove
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.failover_instance(request)
+            client.failover_instance(request)
 
             expected_params = [
             ]
@@ -5668,7 +5660,7 @@ def test_failover_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_failover_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -5766,7 +5758,7 @@ def test_delete_instance_rest_required_fields(request_type=cloud_redis.DeleteIns
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.delete_instance(request)
+            client.delete_instance(request)
 
             expected_params = [
             ]
@@ -5894,7 +5886,7 @@ def test_delete_instance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_delete_instance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -5993,7 +5985,7 @@ def test_reschedule_maintenance_rest_required_fields(request_type=cloud_redis.Re
             response_value._content = json_return_value.encode('UTF-8')
             req.return_value = response_value
 
-            response = client.reschedule_maintenance(request)
+            client.reschedule_maintenance(request)
 
             expected_params = [
             ]
@@ -6125,7 +6117,7 @@ def test_reschedule_maintenance_rest_flattened_error(transport: str = 'rest'):
 
 
 def test_reschedule_maintenance_rest_error():
-    client = CloudRedisClient(
+    CloudRedisClient(
         credentials=ga_credentials.AnonymousCredentials(),
         transport='rest'
     )
@@ -6137,7 +6129,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = CloudRedisClient(
+        CloudRedisClient(
             credentials=ga_credentials.AnonymousCredentials(),
             transport=transport,
         )
@@ -6147,7 +6139,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = CloudRedisClient(
+        CloudRedisClient(
             client_options={"credentials_file": "credentials.json"},
             transport=transport,
         )
@@ -6159,7 +6151,7 @@ def test_credentials_transport_error():
     options = client_options.ClientOptions()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = CloudRedisClient(
+        CloudRedisClient(
             client_options=options,
             transport=transport,
         )
@@ -6168,7 +6160,7 @@ def test_credentials_transport_error():
     options = mock.Mock()
     options.api_key = "api_key"
     with pytest.raises(ValueError):
-        client = CloudRedisClient(
+        CloudRedisClient(
             client_options=options,
             credentials=ga_credentials.AnonymousCredentials()
         )
@@ -6178,7 +6170,7 @@ def test_credentials_transport_error():
         credentials=ga_credentials.AnonymousCredentials(),
     )
     with pytest.raises(ValueError):
-        client = CloudRedisClient(
+        CloudRedisClient(
             client_options={"scopes": ["1", "2"]},
             transport=transport,
         )
@@ -6241,7 +6233,7 @@ def test_transport_grpc_default():
 def test_cloud_redis_base_transport_error():
     # Passing both a credentials object and credentials_file should raise an error
     with pytest.raises(core_exceptions.DuplicateCredentialArgs):
-        transport = transports.CloudRedisTransport(
+        transports.CloudRedisTransport(
             credentials=ga_credentials.AnonymousCredentials(),
             credentials_file="credentials.json"
         )
@@ -6302,7 +6294,7 @@ def test_cloud_redis_base_transport_with_credentials_file():
     with mock.patch.object(google.auth, 'load_credentials_from_file', autospec=True) as load_creds, mock.patch('google.cloud.redis_v1.services.cloud_redis.transports.CloudRedisTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         load_creds.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.CloudRedisTransport(
+        transports.CloudRedisTransport(
             credentials_file="credentials.json",
             quota_project_id="octopus",
         )
@@ -6320,7 +6312,7 @@ def test_cloud_redis_base_transport_with_adc():
     with mock.patch.object(google.auth, 'default', autospec=True) as adc, mock.patch('google.cloud.redis_v1.services.cloud_redis.transports.CloudRedisTransport._prep_wrapped_messages') as Transport:
         Transport.return_value = None
         adc.return_value = (ga_credentials.AnonymousCredentials(), None)
-        transport = transports.CloudRedisTransport()
+        transports.CloudRedisTransport()
         adc.assert_called_once()
 
 
@@ -6578,7 +6570,7 @@ def test_cloud_redis_grpc_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 def test_cloud_redis_grpc_asyncio_transport_channel():
@@ -6591,7 +6583,7 @@ def test_cloud_redis_grpc_asyncio_transport_channel():
     )
     assert transport.grpc_channel == channel
     assert transport._host == "squid.clam.whelk:443"
-    assert transport._ssl_channel_credentials == None
+    assert transport._ssl_channel_credentials is None
 
 
 # Remove this test when deprecated arguments (api_mtls_endpoint, client_cert_source) are
@@ -6825,7 +6817,7 @@ def test_client_with_default_client_info():
     client_info = gapic_v1.client_info.ClientInfo()
 
     with mock.patch.object(transports.CloudRedisTransport, '_prep_wrapped_messages') as prep:
-        client = CloudRedisClient(
+        CloudRedisClient(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )
@@ -6833,7 +6825,7 @@ def test_client_with_default_client_info():
 
     with mock.patch.object(transports.CloudRedisTransport, '_prep_wrapped_messages') as prep:
         transport_class = CloudRedisClient.get_transport_class()
-        transport = transport_class(
+        transport_class(
             credentials=ga_credentials.AnonymousCredentials(),
             client_info=client_info,
         )
@@ -6977,7 +6969,6 @@ def test_cancel_operation_rest(request_type):
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(type(client.transport._session), 'request') as req:
         # Designate an appropriate value for the returned response.
-        return_value = None
 
         # Wrap the value into a proper Response obj
         response_value = Response()
@@ -7024,7 +7015,6 @@ def test_delete_operation_rest(request_type):
     # Mock the http request call within the method and fake a response.
     with mock.patch.object(type(client.transport._session), 'request') as req:
         # Designate an appropriate value for the returned response.
-        return_value = None
 
         # Wrap the value into a proper Response obj
         response_value = Response()
@@ -7238,7 +7228,7 @@ def test_delete_operation_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = None
 
-        response = client.delete_operation(
+        client.delete_operation(
             request={
                 "name": "locations",
             }
@@ -7255,7 +7245,7 @@ async def test_delete_operation_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             None
         )
-        response = await client.delete_operation(
+        await client.delete_operation(
             request={
                 "name": "locations",
             }
@@ -7367,7 +7357,7 @@ def test_cancel_operation_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = None
 
-        response = client.cancel_operation(
+        client.cancel_operation(
             request={
                 "name": "locations",
             }
@@ -7384,7 +7374,7 @@ async def test_cancel_operation_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             None
         )
-        response = await client.cancel_operation(
+        await client.cancel_operation(
             request={
                 "name": "locations",
             }
@@ -7496,7 +7486,7 @@ def test_get_operation_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = operations_pb2.Operation()
 
-        response = client.get_operation(
+        client.get_operation(
             request={
                 "name": "locations",
             }
@@ -7513,7 +7503,7 @@ async def test_get_operation_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             operations_pb2.Operation()
         )
-        response = await client.get_operation(
+        await client.get_operation(
             request={
                 "name": "locations",
             }
@@ -7625,7 +7615,7 @@ def test_list_operations_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = operations_pb2.ListOperationsResponse()
 
-        response = client.list_operations(
+        client.list_operations(
             request={
                 "name": "locations",
             }
@@ -7642,7 +7632,7 @@ async def test_list_operations_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             operations_pb2.ListOperationsResponse()
         )
-        response = await client.list_operations(
+        await client.list_operations(
             request={
                 "name": "locations",
             }
@@ -7754,7 +7744,7 @@ def test_list_locations_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = locations_pb2.ListLocationsResponse()
 
-        response = client.list_locations(
+        client.list_locations(
             request={
                 "name": "locations",
             }
@@ -7771,7 +7761,7 @@ async def test_list_locations_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             locations_pb2.ListLocationsResponse()
         )
-        response = await client.list_locations(
+        await client.list_locations(
             request={
                 "name": "locations",
             }
@@ -7882,7 +7872,7 @@ def test_get_location_from_dict():
         # Designate an appropriate return value for the call.
         call.return_value = locations_pb2.Location()
 
-        response = client.get_location(
+        client.get_location(
             request={
                 "name": "locations/abc",
             }
@@ -7899,7 +7889,7 @@ async def test_get_location_from_dict_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             locations_pb2.Location()
         )
-        response = await client.get_location(
+        await client.get_location(
             request={
                 "name": "locations",
             }

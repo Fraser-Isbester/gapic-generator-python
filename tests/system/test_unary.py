@@ -64,7 +64,6 @@ def test_unary_error(echo):
 
 
 if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
-    import asyncio
 
     @pytest.mark.asyncio
     async def test_async_unary_with_request_object(async_echo):

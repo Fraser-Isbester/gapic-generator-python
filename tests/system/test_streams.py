@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
 import os
 import pytest
-import threading
 from google import showcase
 
 
@@ -94,7 +92,6 @@ def test_stream_stream_passing_dict(echo):
 
 
 if os.environ.get("GAPIC_PYTHON_ASYNC", "true") == "true":
-    import asyncio
 
     @pytest.mark.asyncio
     async def test_async_unary_stream_reader(async_echo):

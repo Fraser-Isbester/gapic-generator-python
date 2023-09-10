@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers_async
@@ -28,7 +28,6 @@ from google.cloud.logging_v2.types import logging_metrics
 from google.longrunning import operations_pb2 # type: ignore
 from google.protobuf import empty_pb2  # type: ignore
 from .base import MetricsServiceV2Transport, DEFAULT_CLIENT_INFO
-from .grpc import MetricsServiceV2GrpcTransport
 
 
 class MetricsServiceV2GrpcAsyncIOTransport(MetricsServiceV2Transport):

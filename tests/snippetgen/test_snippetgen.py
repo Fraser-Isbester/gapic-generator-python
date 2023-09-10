@@ -16,10 +16,8 @@
 from pathlib import Path
 import shutil
 import subprocess
-import sys
 import tempfile
 
-import pytest
 
 
 CURRENT_DIRECTORY = Path(__file__).parent.absolute()
@@ -47,7 +45,7 @@ def setup_module(module):
                 "python",
                 "-m",
                 "grpc_tools.protoc",
-                f"--experimental_allow_proto3_optional",
+                "--experimental_allow_proto3_optional",
                 "--python_gapic_opt=autogen-snippets",
                 f"--proto_path={CURRENT_DIRECTORY}",
                 f"--proto_path={api_common_protos}",

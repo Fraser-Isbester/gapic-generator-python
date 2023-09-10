@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
 from google.api_core import gapic_v1
 from google.api_core import grpc_helpers_async
@@ -37,7 +37,6 @@ from google.iam.v1 import iam_policy_pb2  # type: ignore
 from google.iam.v1 import policy_pb2  # type: ignore
 from google.longrunning import operations_pb2 # type: ignore
 from .base import EventarcTransport, DEFAULT_CLIENT_INFO
-from .grpc import EventarcGrpcTransport
 
 
 class EventarcGrpcAsyncIOTransport(EventarcTransport):

@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import collections
 import itertools
-import typing
 
 from google.api import resource_pb2
 from google.cloud import extended_operations_pb2 as ex_ops_pb2
@@ -365,7 +363,7 @@ def test_service_any_streaming():
             methods=(
                 (
                     make_method(
-                        f"GetMollusc",
+                        "GetMollusc",
                         input_message=make_message(
                             "GetMolluscRequest",
                         ),
@@ -389,7 +387,7 @@ def test_service_any_deprecated():
         methods=(
                 (
                     make_method(
-                        f"GetMollusc",
+                        "GetMollusc",
                         input_message=make_message(
                             "GetMolluscRequest",
                         ),
@@ -400,14 +398,14 @@ def test_service_any_deprecated():
                 )
             ))
 
-    assert service.any_deprecated == False
+    assert service.any_deprecated is False
 
     deprecated_service = make_service(
         name='ServiceWithDeprecatedMethod',
         methods=(
                 (
                     make_method(
-                        f"GetMollusc",
+                        "GetMollusc",
                         input_message=make_message(
                             "GetMolluscRequest",
                         ),
@@ -419,7 +417,7 @@ def test_service_any_deprecated():
                 )
             ))
 
-    assert deprecated_service.any_deprecated == True
+    assert deprecated_service.any_deprecated is True
 
 
 def test_has_pagers():

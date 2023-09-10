@@ -17,9 +17,7 @@ import itertools
 import jinja2
 import json
 import keyword
-import os
 import re
-import time
 import yaml
 
 from gapic import utils
@@ -562,7 +560,7 @@ class Validator:
 
         # We can only flatten a collection of request parameters if they're a
         # subset of the flattened fields of the method.
-        flattenable = self.flattenable_fields >= set(base_param_to_attrs)
+        self.flattenable_fields >= set(base_param_to_attrs)
         return FullRequest(
             request_list=[
                 TransformedRequest.build(

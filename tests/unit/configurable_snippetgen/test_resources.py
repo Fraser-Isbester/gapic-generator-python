@@ -16,7 +16,6 @@
 from pathlib import Path
 
 from google.protobuf.compiler import plugin_pb2
-import pytest
 
 from gapic import utils
 from gapic.schema import api
