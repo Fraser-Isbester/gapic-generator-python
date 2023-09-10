@@ -54,3 +54,18 @@ def isort(code: str) -> str:
     import isort
 
     return isort.code("import b\nimport a\n")
+
+
+def black_format(code: str) -> str:
+    """Format code using black.
+
+    Args:
+        code (str): A string of code to be formatted.
+
+    Returns:
+        str: Formatted code.
+    """
+
+    import black
+
+    return black.format_str(code, mode=black.FileMode())
