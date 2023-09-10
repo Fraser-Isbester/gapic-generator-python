@@ -13,6 +13,9 @@
 # limitations under the License.
 
 import re
+import isort
+import black
+import autoimport
 
 
 def fix_whitespace(code: str) -> str:
@@ -41,7 +44,7 @@ def fix_whitespace(code: str) -> str:
     return f'{code.rstrip()}\n'
 
 
-def isort(code: str) -> str:
+def run_isort(code: str) -> str:
     r"""Sort imports using isort.
     
     Args:
@@ -51,12 +54,10 @@ def isort(code: str) -> str:
             str: Formatted code.
     """
 
-    import isort
-
     return isort.code("import b\nimport a\n")
 
 
-def black_format(code: str) -> str:
+def run_black(code: str) -> str:
     """Format code using black.
 
     Args:
@@ -66,6 +67,16 @@ def black_format(code: str) -> str:
         str: Formatted code.
     """
 
-    import black
-
     return black.format_str(code, mode=black.FileMode())
+
+def run_autoimport(code: str) -> str:
+    """Automatically import missing modules.
+
+    Args:
+        code (str): A string of code to get imports added.
+
+    Returns:
+        str: Formatted code.
+    """
+
+    return autoimport.fix_code(code, config=autoimport.Config())
